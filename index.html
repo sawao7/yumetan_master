@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="wrap">
+            <input
+                type="button"
+                id="start_button"
+                value="1分スピード勝負"
+                onclick="ready()"
+            />
+            <input
+                type="button"
+                id="change_time"
+                value="100問"
+                onclick="ready()"
+            />
+            <input
+                type="button"
+                id="mistake_again"
+                value="間違えた単語を再チャレンジ"
+                onclick="ready()"
+            />
+            <div id="count"></div>
+            <h1><div id="japanese"></div></h1>
+            <h2><div id="word"></div></h2>
+            <div id="scoredis"></div>
+            <h2 id = "mistakes"></h2>
+            <!-- <p class="test">サンプルテキスト１</p> -->
+        </div>
+        <script src="main.js"></script>
+        <script src="mistake.js"></script>
+    </body>
+</html>
