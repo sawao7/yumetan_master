@@ -139,7 +139,7 @@ function gameStart() {
     if (notime == false) {
         var time_remaining = time_limit;
         var gametimer = setInterval(function () {
-            // count.innerHTML = "残り時間：" + time_remaining;
+            count_time_limit.innerHTML = "全体の残り：" + time_remaining;
             time_remaining--;
             if (time_remaining <= 0) {
                 myfinish = 0;
