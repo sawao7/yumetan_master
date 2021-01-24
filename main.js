@@ -277,7 +277,7 @@ function finish() {
     } else if (total_score >= 40) {
         message = "So so...";
     } else if (total_score >= 20) {
-        messge = "Good luck...";
+        message = "Good luck...";
     } else if (total_score >= 0) {
         message = "More Study...";
     }
