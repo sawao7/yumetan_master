@@ -16,8 +16,20 @@
             />
             <input
                 type="button"
-                id="change_time"
-                value="100問"
+                class = "change un_1"
+                value="unit1"
+                onclick="ready()"
+            />
+            <input
+                type="button"
+                class = "change un_2"
+                value="unit2"
+                onclick="ready()"
+            />
+            <input
+                type="button"
+                class = "change un_3"
+                value="unit3"
                 onclick="ready()"
             />
             <input
@@ -26,17 +38,16 @@
                 value="間違えた単語を再チャレンジ"
                 onclick="ready()"
             />
-
-            <div id="good"></div>
             <div id="count_time_limit"></div>
+            <div id="good"></div>
             <div id="count"></div>
             <h1><div id="japanese"></div></h1>
             <h2><div id="word"></div></h2>
             <div id="scoredis"></div>
-            <h2 id="mistakes"></h2>
+            <!-- <h2 id="mistakes"></h2> -->
             <!-- <p class="test">サンプルテキスト１</p> -->
         </div>
         <script src="main.js"></script>
-        <script src="mistake.js"></script>
+        <!-- <script src="mistake.js"></script> -->
     </body>
 </html>
