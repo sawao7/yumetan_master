@@ -181,6 +181,7 @@ function wordDisplay() {
                 count.innerHTML = "<h1>お疲れ様!!</h1>";
             }
         }
+        good.innerHTML = "";
         // console.log(mytime);
         if (char_num == wordlist[random].length) {
             char_num = 0;
@@ -190,11 +191,17 @@ function wordDisplay() {
             Jamusic_1.splice(random, 1);
             Enmusic_1.splice(random, 1);
             console.log("yey2");
-            count.innerHTML =
+            // if (mytime > 2) {
+            //     music_answer.play();
+            // }
+            good.innerHTML =
                 "<h1 style='color: rgb(212, 181, 0);'>Good!!</h1>";
-            clearInterval(mytimer);
             english_score++;
             all_number++;
+            clearInterval(mytimer);
+            
+            // english_score++;
+            // all_number++;
             wordDisplay();
         } else if (mytime < 0) {
             console.log("sawao3");
