@@ -93,28 +93,35 @@ const un_3 = document.querySelector(".un_3");
 let select_en;
 let select_ja;
 un_1.addEventListener("click", () => {
-    console.log("un_1");
+    // console.log("un_1");
     select_en = unit1_en;
     select_ja = unit1_ja;
     Enmusic = Enmusic_1;
     Jamusic = Jamusic_1;
 });
 un_2.addEventListener("click", () => {
-    console.log("un_2");
+    // console.log("un_2");
     select_en = unit2_en;
     select_ja = unit2_ja;
     Enmusic = Enmusic_2;
     Jamusic = Jamusic_2;
 });
 un_3.addEventListener("click", () => {
-    console.log("un_3");
+    // console.log("un_3");
     select_en = unit3_en;
     select_ja = unit3_ja;
     Enmusic = Enmusic_3;
     Jamusic = Jamusic_3;
 });
 
-var mistakelist = [];
+// let mistakelist = [];
+
+let Ja_mistakes = [];
+let En_mistakes = [];
+let Ja_music_mistakes = [];
+let En_music_mistakes = [];
+let mistake_true = false;
+
 var time_limit = 60;
 var readytime = 3;
 var score;
@@ -128,17 +135,36 @@ var myfinish = 1;
 var all_number = 0;
 var my_time = 5;
 var notime = false;
+let keyboard = true;
 
 //リストの単語数が〇〇になったら終了する
 var finish_list_size = 0;
 var mymusic = new Audio(
-    "https://soundeffect-lab.info/sound/anime/mp3/electronic-countdown1.mp3"
+    "https://commons.nicovideo.jp/api/preview/get?cid=221890&content_type=mp3"
+);
+let endmusic = new Audio(
+    "http://commons.nicovideo.jp/api/preview/get?cid=204762&content_type=mp3"
+);
+let fanfalemusic = new Audio("music/fanfale1.mp3");
+let fanfalemusic2 = new Audio(
+    "music/カービィ!デデデ【スマブラSP ファンファーレ】.mp3"
+);
+let fanfalemusic3 = new Audio(
+    "music/サムス!ゼロスーツサムス【スマブラSP ファンファーレ】.mp3"
+);
+let fanfalemusic4 = new Audio(
+    "music/ピット!パルテナ【スマブラSP ファンファーレ】.mp3"
+);
+let fanfalemusic5 = new Audio(
+    "music/リンク!シーク!ゼルダ!こどもリンク!ガノンドロフ!トゥーンリンク【スマブラSP ファンファーレ】.mp3"
+);
+let fanfalemusic6 = new Audio(
+    "music/マルス!ロイ!アイク【スマブラSP ファンファーレ】.mp3"
 );
 
 const btn = document.querySelector("#start_button");
 btn.addEventListener("click", () => {
-    // mymusic.play();
-    console.log("hey");
+    // console.log("hey");
     three_random = Math.floor(Math.random() * 3 + 1);
     if (three_random == 1) {
         select_en = unit1_en;
@@ -165,18 +191,59 @@ notime_btn.forEach((exchange) => {
     exchange.addEventListener("click", () => {
         select_ja = select_ja.split(pattern);
         select_en = select_en.split(pattern);
-        console.log("ok");
+        // console.log("ok");
         notime = true;
         // console.log("trueにしたぞ" + notime)
     });
 });
+
+const mistake_btn = document.querySelector("#mistake_again");
+mistake_btn.addEventListener("click", () => {
+    fanfalemusic2.pause();
+    fanfalemusic2.currentTime = 0;
+    fanfalemusic3.pause();
+    fanfalemusic3.currentTime = 0;
+    fanfalemusic4.pause();
+    fanfalemusic4.currentTime = 0;
+    fanfalemusic5.pause();
+    fanfalemusic5.currentTime = 0;
+    fanfalemusic6.pause();
+    fanfalemusic6.currentTime = 0;
+    // console.log("成功");
+    notime = true;
+    mistake_true = true;
+    start_button.style.display = "inline";
+    start_button.style.visibility = "hidden";
+    count.style.display = "inline";
+    all_number = 0;
+    myfinish = 1;
+    count.innerHTML = "";
+    select_ja = Ja_mistakes;
+    select_en = En_mistakes;
+    // console.log(select_ja + select_en);
+    // console.log(En_music_mistakes);
+    Enmusic = En_music_mistakes;
+    // console.log(Ja_music_mistakes);
+    Jamusic = Ja_music_mistakes;
+    Ja_mistakes = [];
+    En_mistakes = [];
+    En_music_mistakes = [];
+    Ja_music_mistakes = [];
+});
+// function mistake_ready() {
+//     readytime = 3;
+//     scoredis.innerHTML = "";
+//     mistake_again.style.display = "none";
+//     console.log("成功の巻")
+// }
 function ready() {
     // console.log("まだfalseだぞ "+ notime);
     // var music = new Audio("https://yumetanweb.alc.co.jp/audio/2/A01_1_1.mp3");
     // music.play();
     // var music = new Audio("https://yumetanweb.alc.co.jp/audio/2/A01_1_1.mp3");
     // music.play();
-    readytime = 3;
+    console.log("ready");
+    readytime = 4;
     scoredis.innerHTML = "";
     start_button.style.visibility = "hidden";
     notime_btn.forEach((exchange) => {
@@ -184,11 +251,26 @@ function ready() {
     });
     mistake_again.style.display = "none";
     var readytimer = setInterval(function () {
-        count.innerHTML = readytime;
+        // console.log("カウント");
+        mymusic.play();
+        if (readytime == 1) {
+            count.innerHTML = "Game Start!!";
+        } else {
+            count.innerHTML = readytime - 1;
+        }
+
         readytime--;
-        if (readytime < 0) {
+        if (readytime < 0 && mistake_true) {
+            console.log("true");
+
+            // console.log(select_ja + select_en);
             count.innerHTML = "題" + (all_number + 1) + "問";
             clearInterval(readytimer);
+            gameStart();
+        } else if (readytime < 0) {
+            count.innerHTML = "題" + (all_number + 1) + "問";
+            clearInterval(readytimer);
+            console.log("false");
             gameStart();
         }
     }, 1000);
@@ -196,18 +278,28 @@ function ready() {
 function gameStart() {
     // console.log("ここfalseじゃまずいでしょ"+notime);
     mymusic.pause();
+    mymusic.currentTime = 0;
     score = 0.0;
     mistake = 0;
     correct = 0;
+
+    // console.log(select_ja + select_en);
     wordDisplay();
     if (notime == false) {
-        var time_remaining = time_limit;
+        // console.log("notimefalse");
+        var time_remaining = time_limit + 1;
         var gametimer = setInterval(function () {
-            count_time_limit.innerHTML = "全体の残り：" + time_remaining;
+            count_time_limit.innerHTML = "全体の残り：" + (time_remaining - 1);
             time_remaining--;
-            if (time_remaining <= 0) {
+            if (time_remaining < 0) {
                 myfinish = 0;
                 clearInterval(gametimer);
+            } else if (time_remaining == 0) {
+                count_time_limit.innerHTML = "";
+                myfinish = 2;
+                endmusic.play();
+                japanese.innerHTML = "集計中…………";
+                count.innerHTML = "<h1>お疲れ様!!</h1>";
             }
         }, 1000);
     }
@@ -225,6 +317,9 @@ function wordDisplay() {
 
     var mytime = my_time + 1;
     var mytimer = setInterval(function () {
+        keyboard = true;
+        // console.log(select_ja.length + "　長さ");
+        // console.log(select_en.length + "　長さ 英語");
         if (myfinish === 0) {
             clearInterval(mytimer);
             console.log("finish_log");
@@ -234,13 +329,15 @@ function wordDisplay() {
             clearInterval(mytimer);
             finish();
             mytime = null;
-            console.log("why1");
+            // console.log("why1");
         } else {
             // console.log("why");
             console.log(mytime);
             mytime--;
             if (mytime !== -1) {
-                count.innerHTML = "残り時間" + mytime;
+                if (myfinish != 2) {
+                    count.innerHTML = "残り時間" + mytime;
+                }
             } else {
                 count.innerHTML = "<h1>お疲れ様!!</h1>";
             }
@@ -254,7 +351,7 @@ function wordDisplay() {
             select_ja.splice(random, 1);
             Jamusic.splice(random, 1);
             Enmusic.splice(random, 1);
-            console.log("yey2");
+            // console.log("yey2");
             // if (mytime > 2) {
             //     music_answer.play();
             // }
@@ -267,14 +364,32 @@ function wordDisplay() {
             // all_number++;
             wordDisplay();
         } else if (mytime < 0) {
-            console.log("sawao3");
+            // console.log("sawao3");
             all_number++;
-            mistakelist.push(select_ja[random]);
+            // mistakelist.push(select_ja[random]);
+            Ja_mistakes.push(select_ja[random]);
+            En_mistakes.push(select_en[random]);
+            Ja_music_mistakes.push(Jamusic[random]);
+            En_music_mistakes.push(Enmusic[random]);
+            // select_en.splice(random, 1);
             // count.innerHTML = "題" + (all_number + 1) + "問";
             clearInterval(mytimer);
             char_num = 0;
             word.innerHTML = "";
+            if (mistake_true) {
+                // select_ja.pop();
+                // select_en.pop();
+            }
+
+            // console.log(select_en);
+            // console.log(select_en[random]);
+            // console.log(typeof select_en);
+            // console.log("important");
+            // console.log(select_en.length);
+
             select_en.splice(random, 1);
+            // console.log(random);
+            // console.log(select_en);
             select_ja.splice(random, 1);
             Jamusic.splice(random, 1);
             Enmusic.splice(random, 1);
@@ -293,6 +408,7 @@ function wordDisplay() {
             //     }
             // },1000)
         } else if (mytime == 0) {
+            keyboard = false;
             count.innerHTML = "時間切れ";
             word.innerHTML =
                 "<span style='color: black;'>" +
@@ -301,18 +417,21 @@ function wordDisplay() {
                 "<span style = 'color:red'>" +
                 select_en[random].substr(char_num, select_en[random].length) +
                 "</span>";
-            console.log("後ろの" + mytime);
-            console.log("終了");
+            // console.log("後ろの" + mytime);
+            // console.log("終了");
         } else if (mytime == 2) {
             // console.log("music");
-            var music_answer = new Audio(Enmusic[random]);
+            // var music_answer = new Audio(Enmusic[random]);
             music_answer.play();
         }
     }, 1000);
 
     if (select_ja.length !== finish_list_size) {
+        // console.log("通過");
         random = Math.floor(Math.random() * select_en.length);
+        // console.log(random);
         // word.innerHTML = select_en[random];
+        var music_answer = new Audio(Enmusic[random]);
         var music = new Audio(Jamusic[random]);
         music.play();
         japanese.innerHTML =
@@ -324,6 +443,7 @@ function wordDisplay() {
             "語)";
         charInsort();
     } else {
+        endmusic.play();
         japanese.innerHTML = "集計中…………";
     }
 }
@@ -333,22 +453,30 @@ function charInsort() {
     // console.log(word_char);
 }
 function finish() {
+    endmusic.pause();
+    endmusic.currentTime = 0;
     // score = Math.floor(
     //     Math.pow(correct, 2) * Math.pow(correct / (correct + mistake), 5)
     // );
     var total_score = ((english_score / all_number) * 100).toFixed(1);
     var message;
     if (total_score == 100) {
+        fanfalemusic.play();
         message = "Congratulation!!";
     } else if (total_score >= 80) {
+        fanfalemusic2.play();
         message = "Great!!";
     } else if (total_score >= 60) {
+        fanfalemusic3.play();
         message = "Good!!";
     } else if (total_score >= 40) {
+        fanfalemusic4.play();
         message = "So so...";
     } else if (total_score >= 20) {
+        fanfalemusic5.play();
         message = "Good luck...";
     } else if (total_score >= 0) {
+        fanfalemusic6.play();
         message = "More Study...";
     }
     scoredis.innerHTML =
@@ -370,7 +498,7 @@ function finish() {
         "<hr>" +
         "<span style = 'font-weight:bold;'>間違えた問題 : </span>" +
         "<span style = 'font-weight:bold;color:red;'>" +
-        mistakelist +
+        Ja_mistakes +
         "</span>";
     // " 点" +
     // "<hr>正タイプ数:" +
@@ -381,6 +509,7 @@ function finish() {
     // ((correct / (correct + mistake)) * 100).toFixed(1) +
     // "%";
     count.style.display = "none";
+    count_time_limit.innerHTML = "";
     // console.log("heloo");
     word.innerHTML = "";
     japanese.innerHTML = "";
@@ -394,6 +523,7 @@ function finish() {
     random = 0;
     char_num = 0;
 }
+
 document.onkeydown = function (e) {
     if (e.keyCode == 189) {
         keyStr = "-";
@@ -403,7 +533,8 @@ document.onkeydown = function (e) {
         var keyStr = String.fromCharCode(e.keyCode);
         keyStr = keyStr.toLowerCase();
     }
-    if (keyStr == word_char) {
+    if (keyStr == word_char && keyboard == true) {
+        console.log("キーボード" + keyboard);
         // document.getElementById("missaudio").pause();
         // document.getElementById("missaudio").currentTime = 0;
         // document.getElementById("correctaudio").pause();
